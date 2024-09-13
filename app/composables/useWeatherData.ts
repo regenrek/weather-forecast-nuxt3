@@ -57,6 +57,8 @@ export function useWeatherData() {
     pending.value = true
     error.value = null
 
+    console.log("fetchWeatherData", lat.value, lon.value)
+
     try {
       const fetchedData = await $fetch("/api/weather", {
         method: 'GET',

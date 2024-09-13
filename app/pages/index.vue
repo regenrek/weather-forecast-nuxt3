@@ -19,9 +19,12 @@ import { useWeatherData } from '~/composables/useWeatherData'
 const weatherData = useWeatherData()
 
 async function handleCitySubmit(latp: number, lonp: number) {
-  console.log("handleCitySubmit", latp)
+  console.log("handleCitySubmit", latp, lonp)
   weatherData.lat.value = latp
   weatherData.lon.value = lonp
+
+  console.log("fetchWeatherData", weatherData.lat.value, weatherData.lon.value)
+
 }
 
 // await fetch(48.210033, 16.363449)

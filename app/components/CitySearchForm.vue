@@ -11,9 +11,6 @@ const state = reactive({
   longitude: null
 })
 
-state.latitude = 48.210033
-state.longitude = 16.363449
-
 const emit = defineEmits<{
   (e: 'submit', lat: number, lon: number): void
 }>()
@@ -21,6 +18,7 @@ const emit = defineEmits<{
 function onSelect(city) {
   state.latitude = city.latitude
   state.longitude = city.longitude
+  console.log("onSelect", city)
 }
 
 async function onSubmit(event: FormSubmitEvent<unknown>) {
@@ -41,7 +39,8 @@ async function onSubmit(event: FormSubmitEvent<unknown>) {
       by="place_id"
       class="w-full"
       size="xl"
-      @select="onSelect"
+      @update:model-value="onSelect"
+
     />
     <input v-model="state.latitude" type="hidden" >
     <input v-model="state.longitude" type="hidden" >

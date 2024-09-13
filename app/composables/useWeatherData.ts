@@ -1,5 +1,4 @@
-import { ref, watchEffect, computed } from 'vue'
-
+import { ref, watch, computed } from 'vue'
 import { useState } from '#app'
 
 interface Weather {
@@ -30,46 +29,15 @@ interface WeatherData {
     wind_deg: number
     weather: Weather[]
   }
-  minutely: { dt: number, precipitation: number }[]
-}
-
-interface Weather {
-  id: number
-  main: string
-  description: string
-  icon: string
-}
-
-interface WeatherData {
-  lat: number
-  lon: number
-  timezone: string
-  timezone_offset: number
-  current: {
-    dt: number
-    sunrise: number
-    sunset: number
-    temp: number
-    feels_like: number
-    pressure: number
-    humidity: number
-    dew_point: number
-    uvi: number
-    clouds: number
-    visibility: number
-    wind_speed: number
-    wind_deg: number
-    weather: Weather[]
-  }
-  minutely: { dt: number, precipitation: number }[]
+  minutely: { dt: number; precipitation: number }[]
 }
 
 export function useWeatherData() {
-  const lat = ref(48.208176)
-  const lon = ref(16.373819)
+  const lat = useState<number>('weatherLat', () => 48.208176)
+  const lon = useState<number>('weatherLon', () => 16.373819)
   const data = useState<WeatherData | null>('weatherData', () => null)
-  const pending = ref(true)
-  const error = ref(null)
+  const pending = useState<boolean>('weatherPending', () => false)
+  const error = useState<any>('weatherError', () => null)
 
   const weatherIcons = {
     200: 'i-fluent:weather-thunderstorm-48-filled',
@@ -85,16 +53,12 @@ export function useWeatherData() {
     // Add more mappings as needed
   }
 
-  watchEffect(async () => {
-    if (data.value) {
-      pending.value = false
-      return
-    }
-
+  const fetchWeatherData = async () => {
     pending.value = true
     error.value = null
+
     try {
-      const { data: fetchedData, error: fetchError } = await $fetch("/api/weather-test", {
+      const fetchedData = await $fetch("/api/weather", {
         method: 'GET',
         params: {
           lat: lat.value,
@@ -102,26 +66,35 @@ export function useWeatherData() {
         }
       })
 
-      console.log("fetchedData", fetchedData)
-
-      if (fetchError) throw fetchError
-      data.value = fetchedData
+      data.value = fetchedData as WeatherData
     } catch (err) {
-      console.error("error", err)
+      console.error("Error fetching weather data:", err)
       error.value = err
     } finally {
-      console.log("info", false)
       pending.value = false
     }
-  })
+  }
+
+  // Watch for changes in lat or lon
+  watch([lat, lon], () => {
+    fetchWeatherData()
+  }, { immediate: true })
 
   const currentWeatherIcon = computed(() => {
-    if (data.value && data.value.current.weather.length > 0) {
+    if (data.value?.current?.weather?.[0]?.id) {
       const weatherId = data.value.current.weather[0].id
-      return weatherIcons[weatherId] || 'default-icon'
+      return weatherIcons[weatherId as keyof typeof weatherIcons] || 'i-fluent:weather-partly-cloudy-day-48-filled'
     }
-    return 'default-icon'
+    return 'i-fluent:weather-partly-cloudy-day-48-filled' // Default icon
   })
 
-  return { data, pending, error, lat, lon, currentWeatherIcon }
+  return {
+    data,
+    pending,
+    error,
+    lat,
+    lon,
+    currentWeatherIcon,
+    fetchWeatherData
+  }
 }

@@ -1,11 +1,11 @@
 <template>
   <div class="my-4">
-    <h2 class="text-2xl font-bold text-center">7-Day Forecast</h2>
-    <div v-if="pending">Loading...</div>
-    <div v-else-if="error">Error loading data</div>
+    <h2 class="text-2xl font-bold mb-4">7-Day Forecast</h2>
+    <div v-if="isClient && pending">Loading...</div>
+    <div v-else-if="isClient &&error">Error loading data</div>
     <div v-else>
       <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <li v-for="day in forecast" :key="day.dt" class="p-4 bg-gray-500 rounded shadow">
+        <li v-for="day in forecast" :key="day.dt" class="p-4 bg-gray-50 dark:bg-gray-800 rounded-xl shadow">
           <p class="font-bold">{{ formatDate(day.dt) }}</p>
           <img
             :src="getIconUrl(day.weather[0].icon)"
@@ -30,6 +30,11 @@ import { format } from 'date-fns'
 const { data, pending, error } = useWeatherData()
 
 const forecast = computed(() => data.value?.daily?.slice(0, 7) ?? [])
+
+const isClient = ref(false)
+if (import.meta.client) {
+  isClient.value = true
+}
 
 function formatDate(timestamp: number): string {
   return format(new Date(timestamp * 1000), 'EEEE, MMM d')

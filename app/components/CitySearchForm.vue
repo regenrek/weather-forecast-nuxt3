@@ -40,12 +40,12 @@ async function onSubmit(event: FormSubmitEvent<unknown>) {
       option-attribute="city"
       by="place_id"
       class="w-full"
-      size="lg"
+      size="xl"
       @select="onSelect"
     />
     <input v-model="state.latitude" type="hidden" >
     <input v-model="state.longitude" type="hidden" >
-    <UButton type="submit" size="lg" icon="fluent:search-24-filled" :trailing="true">Search Current Weather</UButton>
+    <UButton type="submit" size="xl" icon="fluent:search-24-filled" :trailing="true">Search Current Weather</UButton>
   </UForm>
 </div>
 </template>

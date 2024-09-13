@@ -4,6 +4,10 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
+  extends: [
+    '@zunderai/ui',
+  ],
+
   modules: [
     '@nuxt/content',
     '@nuxt/eslint',
@@ -21,8 +25,9 @@ export default defineNuxtConfig({
     ignoredHostnames: ['localhost'],
   },
   runtimeConfig: {
+    openWeatherApiKey: process.env.OPENWEATHER_API_KEY || '',
     public: {
-      openWeatherApiKey: process.env.OPENWEATHER_API_KEY || '',
+      maptilerApiKey: process.env.MAPTILER_API_KEY || '',
     }
   },
   typescript: {

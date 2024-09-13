@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
   const { lat, lon } = getQuery(event)
 
   const config = useRuntimeConfig()
-  const openWeatherApiKey = config.public.openWeatherApiKey
+  const openWeatherApiKey = config.openWeatherApiKey
 
   if (!openWeatherApiKey) {
     throw createError({

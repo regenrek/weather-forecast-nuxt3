@@ -36,7 +36,12 @@ const { ui, attrs } = useUI('appheader', toRef(props, 'ui'), config, toRef(props
 </script>
 
 <template>
-    <header>
+    <header class="flex justify-between items-center my-2">
+      <div class="flex gap-x-2 items-center">
+        <NuxtImg src="/logo.png" alt="Weather Forecast" width="32" height="32" class="animate-bounce" />
+        <span class="text-2xl font-bold">Wolkenstörung</span>
+      </div>
+      <!-- <div role="navigation">
         <ul class="flex gap-x-4 my-4">
             <li v-for="(link, index) of links" :key="index" class="relative">
               <ULink
@@ -49,6 +54,49 @@ const { ui, attrs } = useUI('appheader', toRef(props, 'ui'), config, toRef(props
               </ULink>
             </li>
         </ul>
+      </div> -->
+      <div class="flex items-center">
+        <TemperatureDisplay />
 
+        <div class="w-px h-6 bg-gray-200 dark:bg-gray-400 mx-4" />
+
+
+        <ZColorModeButton
+          light-icon="i-solar:sun-line-duotone"
+          dark-icon="i-solar:moon-stars-line-duotone"
+        />
+
+        <UButton
+          color="white"
+          variant="ghost"
+          trailing-icon="i-simple-icons:x"
+          class=""
+          to="https://x.com/kregenrek"
+          target="_blank"
+        />
+        <UButton
+          color="white"
+          variant="ghost"
+          trailing-icon="i-simple-icons:github"
+          class=""
+          to="https://github.com/regenrek/weather-forecast-nuxt3"
+          target="_blank"
+        />
+      </div>
     </header>
 </template>
+
+<style scoped>
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(3);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+.animate-bounce {
+  animation: bounce 3s infinite;
+}
+</style>

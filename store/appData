@@ -1,0 +1,30 @@
+import { defineStore } from 'pinia'
+
+interface AppData {
+    settings: any;
+    initialData: any;
+}
+
+export const useAppDataStore = defineStore('appData', {
+    state: (): AppData => ({
+        settings: null,
+        initialData: null,
+    }),
+    actions: {
+        async fetchInitialData() {
+            try {
+                // Perform your API calls here
+                const [settingsResponse, initialDataResponse] = await Promise.all([
+                    $fetch('/api/settings'),
+                    $fetch('/api/initial-data')
+                ])
+
+                this.settings = settingsResponse
+                this.initialData = initialDataResponse
+            } catch (error) {
+                console.error('Error fetching initial data:', error)
+                // Handle error appropriately
+            }
+        }
+    }
+})

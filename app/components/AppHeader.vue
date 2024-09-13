@@ -2,8 +2,6 @@
 import { getULinkProps } from '#ui/utils'
 const route = useRoute()
 
-console.log("/", route.path)
-
 const links = computed(() => [{
   label: 'Home',
   to: '/',
@@ -39,13 +37,13 @@ const { ui, attrs } = useUI('appheader', toRef(props, 'ui'), config, toRef(props
 
 <template>
     <header>
-        <ul>
+        <ul class="flex gap-x-4 my-4">
             <li v-for="(link, index) of links" :key="index" class="relative">
               <ULink
                   v-bind="getULinkProps(link)"
-                  @click="link.click"
-                   :active-class="ui.navlink.active"
+                  :active-class="ui.navlink.active"
                    :inactive-class="ui.navlink.inactive"
+                   @click="link.click"
                 >
                 {{ link.label }}
               </ULink>

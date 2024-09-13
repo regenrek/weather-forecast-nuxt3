@@ -1,16 +1,20 @@
-<script setup lang="ts">
-const { data: page } = await useAsyncData('index', () => queryContent('/').findOne())
-
-useSeoMeta({
-  title: page.value.title,
-  ogTitle: page.value.title,
-  description: page.value.description,
-  ogDescription: page.value.description
-})
-</script>
 <template>
   <div>
-    <h1>{{ page.title }}</h1>
-    <p>{{ page.description }}</p>
+    <WeatherMap />
+    <CitySearchForm @submit="handleCitySubmit" />
+    <TemperatureDisplay />
   </div>
 </template>
+
+<script setup lang="ts">
+import { useWeatherData } from '~/composables/useWeatherData'
+
+const { lat, lon } = useWeatherData()
+
+async function handleCitySubmit(latp: number, lonp: number) {
+  lat.value = latp
+  lon.value = lonp
+}
+
+// await fetch(48.210033, 16.363449)
+</script>

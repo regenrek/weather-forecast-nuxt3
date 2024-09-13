@@ -19,12 +19,15 @@ useSeoMeta({
 </script>
 
 <template>
+  <div class="w-full">
+  <div class="container mx-auto px-4 w-full">
   <AppHeader />
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
 
   <AppFooter />
-
+  </div>
+</div>
   <UNotifications />
 </template>

@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: false },
+  devtools: { enabled: true },
 
   css: ['~/assets/css/main.css'],
 
@@ -12,14 +12,19 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxtjs/plausible',
     'nuxt-og-image',
+    '@nuxtjs/leaflet',
+    '@pinia/nuxt',
   ],
 
   plausible: {
     // Prevent tracking on localhost
     ignoredHostnames: ['localhost'],
   },
-
-
+  runtimeConfig: {
+    public: {
+      openWeatherApiKey: process.env.OPENWEATHER_API_KEY || '',
+    }
+  },
   typescript: {
     strict: false
   },

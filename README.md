@@ -1,4 +1,4 @@
-# ✨ Nuxt 4 Starter Clean and Minimal ✨
+# Weather Forecast Nuxt4
 
 Welcome to the Nuxt 4 Starter project! This starter template is designed to help you quickly set up a Nuxt 4 application with essential features and best practices.
 

@@ -38,8 +38,8 @@ const { ui, attrs } = useUI('appheader', toRef(props, 'ui'), config, toRef(props
 <template>
     <header class="flex justify-between items-center my-2">
       <div class="flex gap-x-2 items-center">
-        <NuxtImg src="/logo.png" alt="Weather Forecast" width="32" height="32" class="animate-bounce" />
-        <span class="text-2xl font-bold">Wolkenstörung</span>
+        <NuxtImg src="/logo2.png" alt="Weather Forecast" width="32" height="32" class="animate-bounce" />
+        <span class="text-2xl font-bold">Ventus Live</span>
       </div>
       <!-- <div role="navigation">
         <ul class="flex gap-x-4 my-4">

@@ -1,8 +1,8 @@
 import { defineEventHandler, getQuery, createError } from 'h3'
 import { ofetch } from 'ofetch'
 
-const RATE_LIMIT_WINDOW = 10 // 10 seconds
-let lastRequestTime: number | null = null
+// const RATE_LIMIT_WINDOW = 10 // 10 seconds
+// let lastRequestTime: number | null = null
 
 export default defineEventHandler(async (event) => {
   const { lat, lon } = getQuery(event)
@@ -23,16 +23,16 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const now = Date.now()
-  if (lastRequestTime && now - lastRequestTime < RATE_LIMIT_WINDOW * 1000) {
-    const timeToWait = Math.ceil((RATE_LIMIT_WINDOW * 1000 - (now - lastRequestTime)) / 1000)
-    throw createError({
-      statusCode: 429,
-      statusMessage: `Too Many Requests. Please try again in ${timeToWait} seconds.`
-    })
-  }
+  // const now = Date.now()
+  // if (lastRequestTime && now - lastRequestTime < RATE_LIMIT_WINDOW * 1000) {
+  //   const timeToWait = Math.ceil((RATE_LIMIT_WINDOW * 1000 - (now - lastRequestTime)) / 1000)
+  //   throw createError({
+  //     statusCode: 429,
+  //     statusMessage: `Too Many Requests. Please try again in ${timeToWait} seconds.`
+  //   })
+  // }
 
-  lastRequestTime = now
+  // lastRequestTime = now
 
   const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&units=metric&appid=${openWeatherApiKey}`
 

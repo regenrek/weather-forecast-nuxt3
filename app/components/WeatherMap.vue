@@ -7,23 +7,29 @@
         :center="[lat, lon]"
         :use-global-leaflet="false"
         class="h-full w-full"
+
+      @ready="onMapReady"
       >
+        <LTileLayer
+          v-if="showRainLayer"
+          :url="rainLayerUrl"
+          :opacity="0.5"
+          layer-type="overlay"
+          name="Rain"
+        />
         <LTileLayer
           :url="mapUrl"
           :attribution="attribution"
           layer-type="base"
           name="OpenStreetMap"
         />
-        <LMarker :lat-lng="[lat, lon]">
-          <template #default>
-            <div class="pin"/>
-          </template>
-        </LMarker>
+        <LControl v-if="isMapReady" position="topright">
+          <button class="leaflet-control-button" @click="toggleRainLayer">
+            {{ showRainLayer ? 'Hide Rain' : 'Show Rain' }}
+          </button>
+        </LControl>      
       </LMap>
     </ClientOnly>
-    <!-- <div v-if="currentWeatherIcon" class="weather-icon">
-      <UIcon :name="currentWeatherIcon" class="w-12 h-12 text-yellow-200 shadow-2xl" />
-    </div> -->
   </div>
 </template>
 
@@ -31,9 +37,12 @@
 import { useWeatherData } from '~/composables/useWeatherData'
 
 const zoom = ref(13)
-const { lat, lon, currentWeatherIcon } = useWeatherData()
+const { lat, lon } = useWeatherData()
 const config = useRuntimeConfig()
 const colorMode = useColorMode()
+const showRainLayer = ref(false)
+const isMapReady = ref(false)
+const map = ref(null);
 
 const mapUrl = computed(() => {
   return colorMode.value === 'dark'
@@ -42,20 +51,34 @@ const mapUrl = computed(() => {
 })
 
 const attribution = '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
+
+const rainLayerUrl = computed(() => {
+  return `https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=${config.public.openWeatherApiKey}`
+})
+
+const toggleRainLayer = () => {
+  showRainLayer.value = !showRainLayer.value
+}
+
+const onMapReady = () => {
+  const leafletMap = map.value?.leafletObject;
+  if (!leafletMap) {
+    console.error('Leaflet map instance is not available.');
+    return;
+  } else {
+    console.log("ready",map.value.leafletObject)
+    isMapReady.value = true
+  }
+}
 </script>
 
 <style scoped>
-.pin {
-  width: 24px;
-  height: 24px;
-  background-color: red;
-  border-radius: 50%;
-}
-
-.weather-icon {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 999;
+.leaflet-control-button {
+  background-color: black;
+  border: 2px solid rgba(0,0,0,0.2);
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  z-index: 800;
 }
 </style>

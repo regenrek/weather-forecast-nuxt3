@@ -53,7 +53,11 @@ export function useWeatherData() {
     // Add more mappings as needed
   }
 
-  const fetchWeatherData = async () => {
+  const fetchWeatherData = async (latp, lonp) => {
+
+    lat.value = latp
+    lon.value = lonp
+
     pending.value = true
     error.value = null
 
@@ -78,9 +82,9 @@ export function useWeatherData() {
   }
 
   // Watch for changes in lat or lon
-  watch([lat, lon], () => {
-    fetchWeatherData()
-  }, { immediate: true })
+  // watch([lat, lon], () => {
+  //   fetchWeatherData()
+  // }, { immediate: true })
 
   const currentWeatherIcon = computed(() => {
     if (data.value?.current?.weather?.[0]?.id) {

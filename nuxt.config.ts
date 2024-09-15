@@ -2,6 +2,8 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
 
+  ssr: false,
+
   css: ['~/assets/css/main.css'],
 
   extends: [
@@ -25,9 +27,9 @@ export default defineNuxtConfig({
     ignoredHostnames: ['localhost'],
   },
   runtimeConfig: {
-    openWeatherApiKey: process.env.OPENWEATHER_API_KEY || '',
     public: {
       maptilerApiKey: process.env.MAPTILER_API_KEY || '',
+      openWeatherApiKey: process.env.OPENWEATHER_API_KEY || '',
     }
   },
   typescript: {

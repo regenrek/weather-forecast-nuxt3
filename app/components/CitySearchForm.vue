@@ -25,7 +25,7 @@ function onSelect(city) {
 const isButtonDisabled = ref(false)
 const submitCount = ref(0)
 const buttonText = ref('Search Current Weather')
-const disableRateLimit = ref(true)
+const disableRateLimit = ref(false)
 
 async function onSubmit(event: FormSubmitEvent<unknown>) {
   event.preventDefault()

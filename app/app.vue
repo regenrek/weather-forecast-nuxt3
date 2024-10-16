@@ -20,14 +20,13 @@ useSeoMeta({
 
 <template>
   <div class="w-full">
-  <div class="mx-auto px-4 w-full">
-  <AppHeader />
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
-
-  <AppFooter />
+    <div class="mx-auto px-4 w-full">
+      <AppHeader />
+        <NuxtLayout>
+            <NuxtPage />
+        </NuxtLayout>
+      <AppFooter />
+    </div>
+    <UNotifications />
   </div>
-</div>
-  <UNotifications />
 </template>

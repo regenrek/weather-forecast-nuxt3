@@ -4,41 +4,39 @@ export default defineNuxtConfig({
 
   ssr: false,
 
-  css: ['~/assets/css/main.css'],
+  css: ["~/assets/css/main.css"],
 
-  extends: [
-    '@zunderai/ui',
-  ],
+  extends: ["@zunderai/ui"],
 
   modules: [
-    '@nuxt/content',
-    '@nuxt/eslint',
-    '@nuxt/fonts',
-    '@nuxt/image',
-    '@nuxt/ui',
-    '@nuxtjs/plausible',
-    'nuxt-og-image',
-    '@nuxtjs/leaflet',
-    '@pinia/nuxt',
+    "@nuxt/content",
+    "@nuxt/eslint",
+    "@nuxt/fonts",
+    "@nuxt/image",
+    "@nuxt/ui",
+    "@nuxtjs/plausible",
+    "nuxt-og-image",
+    "@nuxtjs/leaflet",
+    "@pinia/nuxt",
   ],
 
   plausible: {
     // Prevent tracking on localhost
-    ignoredHostnames: ['localhost'],
+    ignoredHostnames: ["localhost"],
   },
   runtimeConfig: {
     public: {
-      maptilerApiKey: process.env.MAPTILER_API_KEY || '',
-      openWeatherApiKey: process.env.OPENWEATHER_API_KEY || '',
-    }
+      maptilerApiKey: process.env.MAPTILER_API_KEY || "",
+      openWeatherApiKey: process.env.OPENWEATHER_API_KEY || "",
+    },
   },
   typescript: {
-    strict: false
+    strict: false,
   },
 
   future: {
     compatibilityVersion: 4,
   },
-  
+
   compatibilityDate: "2024-05-14",
-})
+});
